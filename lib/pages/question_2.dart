@@ -52,12 +52,7 @@ class _Question2State extends State<Question2> {
         }
 
         if (keys.isNotEmpty) {
-          if (keys[index].keyLabel == "Enter") {
-            focusNode1.requestFocus();
-          }
-          if (keys[index].keyLabel == "Enter") {
-            focusNode2.requestFocus();
-          }
+          
         }
       },
       child: Scaffold(
@@ -66,34 +61,24 @@ class _Question2State extends State<Question2> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextField(
+              textInputAction: TextInputAction.next,
               autofocus: true,
               controller: text1,
+
             ),
             TextField(
               autofocus: true,
-              focusNode: focusNode1,
+              textInputAction: TextInputAction.next,
               controller: text2,
             ),
             TextField(
               autofocus: true,
-              focusNode: focusNode2,
+              textInputAction: TextInputAction.next,
               controller: text3,
             ),
           ],
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            if (keys.isNotEmpty) {
-              if (keys[index].keyLabel == "Enter") {
-                focusNode1.requestFocus();
-              }
-              if (keys[index].keyLabel == "Enter") {
-                focusNode2.requestFocus();
-              }
-            }
-          },
-          child: const Icon(Icons.edit),
-        ),
+        
       ),
     );
   }

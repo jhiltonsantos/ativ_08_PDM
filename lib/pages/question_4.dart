@@ -8,7 +8,7 @@ class Question4 extends StatefulWidget {
 }
 
 class _Question4State extends State<Question4> {
-  bool lampValue = true;
+  bool lampValue = false;
 
   @override
   Widget build(BuildContext context) {
