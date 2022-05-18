@@ -1,11 +1,11 @@
-import 'package:exercicio_8/pages/question_1.dart';
-import 'package:exercicio_8/pages/question_2.dart';
-import 'package:exercicio_8/pages/question_3.dart';
-import 'package:exercicio_8/pages/question_4.dart';
-import 'package:exercicio_8/pages/question_5.dart';
-import 'package:exercicio_8/pages/question_6.dart';
-import 'package:exercicio_8/pages/question_7.dart';
-import 'package:exercicio_8/resources/widgets/build_button_pages_widget.dart';
+import 'package:exercicio_8/exercicio/presentation/pages/question_1.dart';
+import 'package:exercicio_8/exercicio/presentation/pages/question_2.dart';
+import 'package:exercicio_8/exercicio/presentation/pages/question_3.dart';
+import 'package:exercicio_8/exercicio/presentation/pages/question_4.dart';
+import 'package:exercicio_8/exercicio/presentation/pages/question_5.dart';
+import 'package:exercicio_8/exercicio/presentation/pages/question_6.dart';
+import 'package:exercicio_8/exercicio/presentation/pages/question_7.dart';
+import 'package:exercicio_8/exercicio/presentation/resources/widgets/build_button_pages_widget.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {

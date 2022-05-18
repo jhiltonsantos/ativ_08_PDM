@@ -1,5 +1,5 @@
-import 'package:exercicio_8/models/checkbox_state_model.dart';
-import 'package:exercicio_8/resources/strings.dart';
+import 'package:exercicio_8/exercicio/domain/entities/checkbox_state_model.dart';
+import 'package:exercicio_8/exercicio/presentation/resources/strings.dart';
 import 'package:flutter/material.dart';
 
 class Question3 extends StatefulWidget {

@@ -27,7 +27,8 @@ class _Question6State extends State<Question6> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
               child: Autocomplete<String>(
                 optionsBuilder: (TextEditingValue textEditingValue) {
                   if (textEditingValue.text == '') {
@@ -62,11 +63,16 @@ class _Question6State extends State<Question6> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        setState(() {
-          elements = filter;
-        });
-      }, child: const Icon(Icons.list),),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            if (filter.isNotEmpty) {
+              elements = filter;
+            }
+          });
+        },
+        child: const Icon(Icons.list),
+      ),
     );
   }
 }
