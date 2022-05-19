@@ -16,6 +16,12 @@ class _Question7State extends State<Question7> {
 
   String? selectedItem = 'Names';
 
+  getNames() async {
+    for (User user in allUsers) {
+      names.add(user.name!);
+    }
+  }
+
   callme() async {
     await fetch().then((value) => {
           setState(() {
@@ -28,16 +34,18 @@ class _Question7State extends State<Question7> {
   void initState() {
     super.initState();
     callme();
+  }
 
-    for (User user in allUsers) {
-      names.add(user.name!);
-    }
-    print('Nomes: $names');
-    print('List $allUsers');
+  @override
+  void dispose() {
+    names = [];
+    allUsers = [];
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    getNames();
     return Scaffold(
       appBar: AppBar(title: const Text('Questão 7')),
       body: SingleChildScrollView(
@@ -54,8 +62,22 @@ class _Question7State extends State<Question7> {
                     );
                   }
                   if (snapshot.hasData) {
+                    print('Nomes de aluno: $names');
                     return Column(
                       children: [
+                        DropdownButton(
+                          items: names.map((item) {
+                            return DropdownMenuItem(
+                              value: item,
+                              child: Text(item),
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              selectedItem = value as String;
+                            });
+                          },
+                        ),
                         ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
