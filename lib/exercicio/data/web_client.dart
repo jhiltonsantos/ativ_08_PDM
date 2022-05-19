@@ -9,5 +9,6 @@ const headerAPI = <String, String>{
 };
 
 final http.Client client = InterceptedClient.build(
-    interceptors: [AppInterceptor()],
-    requestTimeout: const Duration(seconds: 5));
+    interceptors: [], requestTimeout: const Duration(seconds: 5));
+
+//AppInterceptor()

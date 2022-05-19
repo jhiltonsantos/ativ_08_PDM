@@ -51,9 +51,7 @@ class _Question2State extends State<Question2> {
           setState(() => keys.add((key)));
         }
 
-        if (keys.isNotEmpty) {
-          
-        }
+        if (keys.isNotEmpty) {}
       },
       child: Scaffold(
         appBar: AppBar(title: const Text('Questão 2')),
@@ -64,7 +62,6 @@ class _Question2State extends State<Question2> {
               textInputAction: TextInputAction.next,
               autofocus: true,
               controller: text1,
-
             ),
             TextField(
               autofocus: true,
@@ -73,12 +70,10 @@ class _Question2State extends State<Question2> {
             ),
             TextField(
               autofocus: true,
-              textInputAction: TextInputAction.next,
               controller: text3,
             ),
           ],
         ),
-        
       ),
     );
   }
