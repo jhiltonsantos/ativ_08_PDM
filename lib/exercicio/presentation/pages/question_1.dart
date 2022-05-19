@@ -24,7 +24,7 @@ class _Question1State extends State<Question1> {
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: Text(
-              'Texto de Apoio',
+              'Lorem Ipsum',
               style: TextStyle(
                 fontSize: 28.0,
                 fontWeight:

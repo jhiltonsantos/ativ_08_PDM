@@ -18,14 +18,4 @@ class UserRepository implements IUserRepository {
         decodedJson.map((dynamic json) => User.fromJson(json)).toList();
     return users;
   }
-
-  @override
-  Future<User> findUserByID(int id) async {
-    final http.Response response =
-        await client.get(Uri.parse('$baseUrl/users/$id'));
-    if (response.statusCode != 200) {
-      throw Exception('Falha ao carregar usuario');
-    }
-    return User.fromJson(jsonDecode(response.body));
-  }
 }

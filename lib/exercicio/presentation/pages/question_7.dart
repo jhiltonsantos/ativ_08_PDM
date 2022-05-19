@@ -1,5 +1,5 @@
-import 'package:exercicio_8/exercicio/data/repositories/user_repository.dart';
 import 'package:exercicio_8/exercicio/domain/entities/user.dart';
+import 'package:exercicio_8/exercicio/domain/usecases/user/queries/find_all_users.dart';
 import 'package:flutter/material.dart';
 
 class Question7 extends StatefulWidget {
@@ -10,37 +10,17 @@ class Question7 extends StatefulWidget {
 }
 
 class _Question7State extends State<Question7> {
-  final UserRepository userRepository = UserRepository();
+  final FindAllUsers findAllUsers = FindAllUsers();
+
   List<User> allUsers = [];
   List<String> names = [];
-
-  String? selectedItem = 'Names';
-
-  getNames() async {
-    for (User user in allUsers) {
-      names.add(user.name!);
-    }
-  }
-
-  callme() async {
-    await fetch().then((value) => {
-          setState(() {
-            allUsers = value;
-          })
-        });
-  }
+  List<User> bkUsers = [];
+  String selectedItem = "Nome";
 
   @override
   void initState() {
     super.initState();
-    callme();
-  }
-
-  @override
-  void dispose() {
-    names = [];
-    allUsers = [];
-    super.dispose();
+    fetchToList();
   }
 
   @override
@@ -51,63 +31,96 @@ class _Question7State extends State<Question7> {
       body: SingleChildScrollView(
           physics: const ScrollPhysics(),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              FutureBuilder(
-                future: userRepository.findAllUser(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return const Center(
-                      child: Text('Erro na requisição'),
-                    );
-                  }
-                  if (snapshot.hasData) {
-                    print('Nomes de aluno: $names');
-                    return Column(
-                      children: [
-                        DropdownButton(
-                          items: names.map((item) {
-                            return DropdownMenuItem(
-                              value: item,
-                              child: Text(item),
-                            );
-                          }).toList(),
-                          onChanged: (value) {
-                            setState(() {
-                              selectedItem = value as String;
-                            });
-                          },
-                        ),
-                        ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: allUsers.length,
-                            itemBuilder: ((context, index) {
-                              return Column(
-                                children: [
-                                  ListTile(
-                                    title: Text(allUsers[index].name!),
-                                  )
-                                ],
-                              );
-                            })),
-                      ],
-                    );
-                  } else {
-                    return const Center(
-                        child: Padding(
-                      padding: EdgeInsets.all(20.0),
-                      child: CircularProgressIndicator(),
-                    ));
-                  }
-                },
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                    vertical: 20.0, horizontal: 10.0),
+                child: FutureBuilder(
+                  future: findAllUsers.execute(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return const Center(
+                        child: Text('Erro na requisição'),
+                      );
+                    }
+                    if (snapshot.hasData) {
+                      return Column(
+                        children: [
+                          DropdownButton(
+                            items: names
+                                .map((String item) => DropdownMenuItem(
+                                    value: item, child: Text(item)))
+                                .toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                selectedItem = value as String;
+                                allUsers = getuser(selectedItem);
+                              });
+                            },
+                          ),
+                          ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: allUsers.length,
+                              itemBuilder: ((context, index) => Column(
+                                    children: [
+                                      ListTile(
+                                        title: Text(allUsers[index].name!),
+                                      )
+                                    ],
+                                  ))),
+                        ],
+                      );
+                    } else {
+                      return const Center(
+                          child: Padding(
+                        padding: EdgeInsets.all(20.0),
+                        child: CircularProgressIndicator(),
+                      ));
+                    }
+                  },
+                ),
               ),
             ],
           )),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() => fetchToList());
+        },
+        child: const Icon(Icons.list),
+      ),
     );
   }
 
-  Future<List<User>> fetch() async {
-    return await userRepository.findAllUser();
+  void fetchToList() async {
+    await findAllUsers
+        .execute()
+        .then((value) => {setState(() => allUsers = value)});
+    bkUsers = allUsers;
+  }
+
+  void getNames() {
+    if (names.isEmpty) {
+      for (User user in allUsers) {
+        names.add(user.name!);
+      }
+    }
+  }
+
+  void recoverList() async {
+    if (allUsers.length == 1) {
+      allUsers = [];
+      allUsers = await findAllUsers.execute();
+    }
+  }
+
+  List<User> getuser(String valueName) {
+    if (names.isNotEmpty) {
+      for (User user in bkUsers) {
+        if (user.name == valueName) return [user];
+      }
+    }
+    return [];
   }
 }
